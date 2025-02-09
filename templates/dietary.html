@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Diet Recommendation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Our Diet Recommendation</h1>
+        <p>Modify the values and click the Generate button to use.</p>
+        <form action="/dietary" method="post"> <!-- Update form action to POST to /dietary -->
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" value="2">
+            
+            <label for="height">Height(cm)</label>
+            <input type="number" id="height" name="height" value="50">
+            
+            <label for="weight">Weight(kg)</label>
+            <input type="number" id="weight" name="weight" value="10">
+            
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            
+            <label for="activity">Activity</label>
+            <select id="activity" name="activity">
+                <option value="little">Little/no exercise</option>
+                <option value="active">Active</option>
+                <option value="extra">Extra active (very active & physical job)</option>
+            </select>
+            
+            <label for="weight-loss-plan">Choose your weight loss plan:</label>
+            <select id="weight-loss-plan" name="weight_loss_plan"> <!-- Update name to weight_loss_plan -->
+                <option value="maintain">Maintain weight</option>
+                <option value="lose">Lose weight</option>
+            </select>
+            
+            <label for="meals-per-day">Meals per day</label>
+            <input type="number" id="meals-per-day" name="meals_per_day" value="3"> <!-- Update name to meals_per_day -->
+            
+            <label for="meal_preference">Meal Preference:</label>
+            <select id="meal_preference" name="meal_preference">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+            </select>
+            
+            <button type="submit">Generate</button>
+        </form>
+        
+        <!-- Add section to display BMI, BMI category, and recommended food -->
+        {% if bmi %}
+        <h2>Body Mass Index (BMI)</h2>
+        <p>{{ bmi }}</p>
+        <p>{{ bmi_category }}</p>
+        
+        <h2>Recommended recipes:</h2>
+        <ul>
+            {% for food_item in recommended_food %}
+            <li>{{ food_item['name'] }} ({{ food_item['meal_type'] }})</li>
+            {% endfor %}
+        </ul>
+        <!-- Add section to display total calories -->
+        {% if total_calories %}
+          <h2>Total Calories</h2>
+          <p>{{ total_calories }}</p>
+        {% endif %}
+
+        {% endif %}
+    </div>
+</body>
+</html>
